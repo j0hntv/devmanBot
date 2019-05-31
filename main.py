@@ -36,7 +36,7 @@ def start_bot(bot, chat_id, token_devman):
                 message_list = [f'Преподаватель проверил работу *"{lesson}".*']
 
                 if is_negative:
-                    message_list.append('К сожалению, в работе есть ошибки. 🙈')
+                    message_list.append('К сожалению, в работе есть ошибки. 🧐')
                 else:
                     message_list.append('Работа принята 🚀')
 
