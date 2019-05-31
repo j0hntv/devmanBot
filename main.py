@@ -8,9 +8,9 @@ TIMEOUT = 5
 
 logging.basicConfig(format='%(asctime)s [%(levelname)s] %(message)s', filename='bot.log')
 
-token_devman = os.getenv('token_devman')
-token_bot = os.getenv('token_bot')
-chat_id = os.getenv('chat_id')
+token_devman = os.environ['token_devman']
+token_bot = os.environ['token_bot']
+chat_id = os.environ['chat_id']
 
 def start_bot(bot, chat_id, token_devman):
     timestamp = time.time()
