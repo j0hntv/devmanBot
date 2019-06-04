@@ -1,1 +1,1 @@
-bot: python3 main.py
+devmanbot: python3 main.py
