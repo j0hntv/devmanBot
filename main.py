@@ -20,7 +20,7 @@ class Handler(logging.Handler):
 
     def emit(self, record):
         log_entry = self.format(record)
-        bot.send_message(chat_id=chat_id, text=log_entry)
+        self.bot.send_message(chat_id=self.chat_id, text=log_entry)
         
 
 def start_bot(bot, chat_id, token_devman):
