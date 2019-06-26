@@ -12,6 +12,17 @@ token_devman = os.environ['token_devman']
 token_bot = os.environ['token_bot']
 chat_id = os.environ['chat_id']
 
+class Handler(logging.Handler):
+
+    def __init__(self, bot, chat_id):
+        self.bot = bot
+        self.chat_id = chat_id
+
+    def emit(record):
+        log_entry = self.format(record)
+        bot.send_message(chat_id=chat_id, text=log_entry)
+        
+
 def start_bot(bot, chat_id, token_devman):
     timestamp = time.time()
 
