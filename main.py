@@ -6,20 +6,11 @@ import time
 
 TIMEOUT = 5
 
-token_devman = os.environ['token_devman']
-token_bot = os.environ['token_bot']
-chat_id = os.environ['chat_id']
+logging.basicConfig(format='%(asctime)s [%(levelname)s] %(message)s', filename='bot.log')
 
-class Handler(logging.Handler):
-
-    def __init__(self, bot, chat_id):
-        self.bot = bot
-        self.chat_id = chat_id
-
-    def emit(self, record):
-        log_entry = self.format(record)
-        self.bot.send_message(chat_id=self.chat_id, text=log_entry)
-        
+token_devman = os.getenv('token_devman')
+token_bot = os.getenv('token_bot')
+chat_id = os.getenv('chat_id')
 
 def start_bot(bot, chat_id, token_devman):
     timestamp = time.time()
@@ -29,7 +20,6 @@ def start_bot(bot, chat_id, token_devman):
 
     while True:
         try:
-            print(1/0)
             payload = {'timestamp': timestamp}
             response = requests.get(long_polling_url, headers=headers, params=payload)
             response.raise_for_status()
@@ -46,7 +36,7 @@ def start_bot(bot, chat_id, token_devman):
                 message_list = [f'Преподаватель проверил работу *"{lesson}".*']
 
                 if is_negative:
-                    message_list.append('К сожалению, в работе есть ошибки. 🧐')
+                    message_list.append('К сожалению, в работе есть ошибки. 🙈')
                 else:
                     message_list.append('Работа принята 🚀')
 
@@ -63,28 +53,16 @@ def start_bot(bot, chat_id, token_devman):
             pass
 
         except requests.ConnectionError as error:
-            logging.error(error)
+            logging.error(repr(error))
             time.sleep(TIMEOUT)
 
         except requests.exceptions.HTTPError as error:
-            logging.error(error)
-            time.sleep(TIMEOUT)
-
-        except ZeroDivisionError as error:
-            logging.error(error)
+            logging.error(repr(error))
             time.sleep(TIMEOUT)
 
 
 def main():
     bot = telegram.Bot(token=token_bot)
-
-    # logger = logging.getLogger()
-    # logger.setLevel(logging.ERROR)
-    # formatter = logging.Formatter('[%(levelname)s]\n%(message)s')
-    # handler = Handler(bot, chat_id)
-    # handler.setFormatter(formatter)
-    # logger.addHandler(handler)
-    
     start_bot(bot, chat_id, token_devman)
 
 
