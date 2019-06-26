@@ -78,12 +78,12 @@ def start_bot(bot, chat_id, token_devman):
 def main():
     bot = telegram.Bot(token=token_bot)
 
-    logger = logging.getLogger()
-    logger.setLevel(logging.ERROR)
-    formatter = logging.Formatter('[%(levelname)s]\n%(message)s')
-    handler = Handler(bot, chat_id)
-    handler.setFormatter(formatter)
-    logger.addHandler(handler)
+    # logger = logging.getLogger()
+    # logger.setLevel(logging.ERROR)
+    # formatter = logging.Formatter('[%(levelname)s]\n%(message)s')
+    # handler = Handler(bot, chat_id)
+    # handler.setFormatter(formatter)
+    # logger.addHandler(handler)
     
     start_bot(bot, chat_id, token_devman)
 
