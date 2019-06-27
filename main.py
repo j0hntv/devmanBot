@@ -40,8 +40,7 @@ def start_bot(bot, chat_id, token_devman):
     while True:
         try:
             payload = {'timestamp': timestamp}
-            # response = requests.get(long_polling_url, headers=headers, params=payload)
-            response = requests.get(long_polling_url, params=payload)
+            response = requests.get(long_polling_url, headers=headers, params=payload)
             response.raise_for_status()
             response = response.json()
 
