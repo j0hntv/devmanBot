@@ -39,6 +39,7 @@ def start_bot(bot, chat_id, token_devman):
 
     while True:
         try:
+            1/0
             payload = {'timestamp': timestamp}
             response = requests.get(long_polling_url, headers=headers, params=payload)
             response.raise_for_status()
@@ -76,6 +77,10 @@ def start_bot(bot, chat_id, token_devman):
             time.sleep(TIMEOUT)
 
         except requests.exceptions.HTTPError as error:
+            logger.error(error)
+            time.sleep(TIMEOUT)
+
+        except ZeroDivisionError as error:
             logger.error(error)
             time.sleep(TIMEOUT)
 
