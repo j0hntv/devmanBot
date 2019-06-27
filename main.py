@@ -6,13 +6,32 @@ import time
 
 TIMEOUT = 5
 
-logging.basicConfig(format='%(asctime)s [%(levelname)s] %(message)s', filename='bot.log')
-
 token_devman = os.getenv('token_devman')
 token_bot = os.getenv('token_bot')
 chat_id = os.getenv('chat_id')
 
+class Handler(logging.Handler):
+
+    def __init__(self, bot, chat_id):
+        super().__init__()
+        self.bot = bot
+        self.chat_id = chat_id
+
+    def emit(self, record):
+        log_entry = self.format(record)
+        self.bot.send_message(chat_id=self.chat_id, text=log_entry)
+
+
 def start_bot(bot, chat_id, token_devman):
+    logger = logging.getLogger()
+    logger.setLevel(logging.INFO)
+    handler = Handler(bot, chat_id)
+    formatter = logging.Formatter('[%(levelname)s]  %(message)s')
+    handler.setFormatter(formatter)
+    logger.addHandler(handler)
+
+    logging.info('Проверка связи.')
+    
     timestamp = time.time()
 
     long_polling_url = 'https://dvmn.org/api/long_polling/'
@@ -47,17 +66,17 @@ def start_bot(bot, chat_id, token_devman):
                 timestamp = response['timestamp_to_request']
 
             else:
-                logging.warning(response)
+                logger.warning(response)
 
         except requests.exceptions.ReadTimeout:
             pass
 
         except requests.ConnectionError as error:
-            logging.error(repr(error))
+            logger.error(error)
             time.sleep(TIMEOUT)
 
         except requests.exceptions.HTTPError as error:
-            logging.error(repr(error))
+            logger.error(error)
             time.sleep(TIMEOUT)
 
 
