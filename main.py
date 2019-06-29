@@ -3,12 +3,9 @@ import os
 import requests
 import telegram
 import time
+from dotenv import load_dotenv
 
 TIMEOUT = 5
-
-token_devman = os.getenv('TOKEN_DEVMAN')
-token_bot = os.getenv('TOKEN_BOT')
-chat_id = os.getenv('CHAT_ID')
 
 class Handler(logging.Handler):
 
@@ -77,6 +74,10 @@ def start_bot(bot, chat_id, token_devman):
 
 
 def main():
+    load_dotenv()
+    token_devman = os.getenv('TOKEN_DEVMAN')
+    token_bot = os.getenv('TOKEN_BOT')
+    chat_id = os.getenv('CHAT_ID')
     bot = telegram.Bot(token=token_bot)
     start_bot(bot, chat_id, token_devman)
 
