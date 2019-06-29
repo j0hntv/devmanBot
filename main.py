@@ -6,9 +6,9 @@ import time
 
 TIMEOUT = 5
 
-token_devman = os.getenv('token_devman')
-token_bot = os.getenv('token_bot')
-chat_id = os.getenv('chat_id')
+token_devman = os.getenv('TOKEN_DEVMAN')
+token_bot = os.getenv('TOKEN_BOT')
+chat_id = os.getenv('CHAT_ID')
 
 class Handler(logging.Handler):
 
@@ -44,7 +44,7 @@ def start_bot(bot, chat_id, token_devman):
             response.raise_for_status()
             response = response.json()
 
-            status = response.get('status', None)
+            status = response.get('status')
 
             if status == 'found':
                 new_attempts = response['new_attempts'][0]
@@ -71,11 +71,7 @@ def start_bot(bot, chat_id, token_devman):
         except requests.exceptions.ReadTimeout:
             pass
 
-        except requests.ConnectionError as error:
-            logger.error(error)
-            time.sleep(TIMEOUT)
-
-        except requests.exceptions.HTTPError as error:
+        except (requests.ConnectionError, requests.exceptions.HTTPError) as error:
             logger.error(error)
             time.sleep(TIMEOUT)
 
