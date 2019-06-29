@@ -69,7 +69,7 @@ def start_bot(bot, chat_id, token_devman):
             pass
 
         except (requests.ConnectionError, requests.exceptions.HTTPError) as error:
-            logger.error(error)
+            logging.exception(error, exc_info=False)
             time.sleep(TIMEOUT)
 
 
