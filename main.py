@@ -27,7 +27,7 @@ def start_bot(bot, chat_id, token_devman):
     handler.setFormatter(formatter)
     logger.addHandler(handler)
 
-    logging.info('Проверка связи.')
+    logger.info('Проверка связи.')
     
     timestamp = time.time()
 
