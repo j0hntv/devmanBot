@@ -9,9 +9,9 @@ pip install -r requirements.txt
 ```
 Create .env file with environment variables:
 ```
-token_devman=<token_devman>
-token_bot=<token_bot>
-chat_id=<chat_id>
+token_devman=<TOKEN_DEVMAN>
+token_bot=<TOKEN_BOT>
+chat_id=<CHAT_ID>
 ```
 ### Usage
 ```
