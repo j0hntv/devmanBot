@@ -7,12 +7,17 @@ Python3 should be already installed. Then use `pip` (or `pip3`, if there is a co
 ```
 pip install -r requirements.txt
 ```
+* **Run on local machine**
+
 Create .env file with environment variables:
 ```
 token_devman=<TOKEN_DEVMAN>
 token_bot=<TOKEN_BOT>
 chat_id=<CHAT_ID>
 ```
+* **Deploy on Heroku**
+
+Set `TOKEN_DEVMAN`, `TOKEN_BOT` and `CHAT_ID` on the Config Vars in the Settings tab on the Heroku website.
 ### Usage
 ```
 python main.py
