@@ -5,7 +5,10 @@ import telegram
 import time
 from dotenv import load_dotenv
 
+
 TIMEOUT = 5
+logger = logging.getLogger()
+
 
 class Handler(logging.Handler):
 
@@ -19,20 +22,13 @@ class Handler(logging.Handler):
         self.bot.send_message(chat_id=self.chat_id, text=log_entry)
 
 
-def start_bot(bot, chat_id, token_devman):
-    logger = logging.getLogger()
-    logger.setLevel(logging.INFO)
-    handler = Handler(bot, chat_id)
-    formatter = logging.Formatter('[%(levelname)s]  %(message)s')
-    handler.setFormatter(formatter)
-    logger.addHandler(handler)
-
+def start_bot(bot, chat_id, devman_token):
     logger.info('Проверка связи.')
-    
+
     timestamp = time.time()
 
     long_polling_url = 'https://dvmn.org/api/long_polling/'
-    headers = {'Authorization': f'Token {token_devman}'}
+    headers = {'Authorization': f'Token {devman_token}'}
 
     while True:
         try:
@@ -74,12 +70,19 @@ def start_bot(bot, chat_id, token_devman):
 
 
 def main():
+    logger.setLevel(logging.INFO)
+    handler = Handler(bot, chat_id)
+    formatter = logging.Formatter('[%(levelname)s]  %(message)s')
+    handler.setFormatter(formatter)
+    logger.addHandler(handler)
+
     load_dotenv()
-    token_devman = os.getenv('TOKEN_DEVMAN')
-    token_bot = os.getenv('TOKEN_BOT')
+    devman_token = os.getenv('DEVMAN_TOKEN')
+    tg_token = os.getenv('TG_TOKEN')
     chat_id = os.getenv('CHAT_ID')
-    bot = telegram.Bot(token=token_bot)
-    start_bot(bot, chat_id, token_devman)
+
+    bot = telegram.Bot(token=tg_token)
+    start_bot(bot, chat_id, devman_token)
 
 
 if __name__ == '__main__':
