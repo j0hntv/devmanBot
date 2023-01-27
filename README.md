@@ -1,7 +1,7 @@
 # devmanBot
 
 Telegram bot for sending notifications about verification of works on [dvmn.org](https://dvmn.org/modules).
-### How to install
+## How to install
 
 Python3 should be already installed. Then use `pip` (or `pip3`, if there is a conflict with Python2) to install dependencies:
 ```
@@ -18,12 +18,23 @@ chat_id=<CHAT_ID>
 * **Deploy on Heroku**
 
 Set `TOKEN_DEVMAN`, `TOKEN_BOT` and `CHAT_ID` on the Config Vars in the Settings tab on the Heroku website.
-### Usage
+## Usage
 ```
 python main.py
 ```
-### Project Goals
+
+## Run in Docker
+
+Build:
+```
+docker build --tag devman .
+```
+
+Run:
+```
+docker run -e DEVMAN_TOKEN=... -e TG_TOKEN=... -e CHAT_ID=... --restart always devman
+```
+
+
+## Project Goals
 The code is written for educational purposes on online-course for web-developers [dvmn.org](https://dvmn.org)
-
-
-
